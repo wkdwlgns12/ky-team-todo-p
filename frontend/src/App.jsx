@@ -1,8 +1,8 @@
 import './App.css'
 import Header from './components/Header'
-import TodoItem from './components/TodoItem'
-import TodoLIst from './components/TodoLIst'
-import TodoEditor from './components/TodoEditor'
+import Item from './components/Item'
+import List from './components/LIst'
+import Editor from './components/Editor'
 
 function App() {
 
