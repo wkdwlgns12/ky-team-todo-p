@@ -17,7 +17,18 @@ router.post("/", async (req, res) => {
     }
 });
 
+//메뉴 삭제
+router.delete("/:id", async (req, res) => {
+        try {
+            const deleted=await Menu.findByIdAndDelete(req.params.id)
 
+            if(!deleted) return res.status(404).json({message: "메뉴를 찾을 수 없습니다."})
+
+            res.status(200).json({message:"메뉴가 삭제 되었습니다"})
+        } catch (error) {
+            res.status(400).json({message:"서버 오류",error})
+        }
+    });
 
 // 목록
 router.get("/", async (_req, res) => {
