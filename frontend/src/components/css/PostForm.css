@@ -1,0 +1,60 @@
+.post-wrap {
+    max-width: 680px;
+    margin: 32px auto;
+    padding: 0 20px;
+}
+
+.post-wrap h2 {
+    margin: 0 0 12px;
+}
+
+.post-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.post-controls input,
+.post-controls textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #eee;
+    border-radius: 10px;
+}
+
+.btn {
+    padding: 12px;
+    border: 1px solid #f8fafc;
+    cursor: pointer;
+    border-radius: 10px;
+    color: #fff;
+    background-color: rgb(34, 204, 34);
+}
+
+.btn.refresh {
+    background-color: orange;
+}
+
+.btn+.btn {
+    margin-left: 10px;
+}
+
+.update.btn {
+    background-color: rgb(34, 204, 34);
+}
+
+.delete.btn {
+    background-color: rgb(235, 38, 38);
+}
+
+.post-list li {
+    border: 1px solid #eee;
+    padding: 12px;
+    margin: 12px 0;
+    border-radius: 10px;
+}
+
+.post-list li p {
+    margin: 10px 0;
+    color: #6d6d6d;
+}
