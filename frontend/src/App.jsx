@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './App.css'
 import Header from './components/Header'
 import Item from './components/Item'
@@ -14,3 +15,27 @@ function App() {
 }
 
 export default App
+=======
+import { BrowserRouter, Routes, Route, Link } from "react-router-dom"
+import Home from "./pages/Home"
+import About from "./pages/About"
+import "./styles/global.css"
+import "./App.css"
+
+export default function App() {
+  return (
+    <BrowserRouter>
+      <nav className="nav-bar">
+        <div className="nav-inner">
+          <Link to="/">홈</Link>
+          <Link to="/about">About</Link>
+        </div>
+      </nav>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+>>>>>>> ji
