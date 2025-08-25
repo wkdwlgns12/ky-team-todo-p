@@ -46,8 +46,18 @@ export default function Home() {
             if (sort === "popular") {
                 pub = [...pub].sort((a, b) => (b.voteCount ?? 0) - (a.voteCount ?? 0));
             }
-            setList(pub);
-            setMine(mineRes.data || []);
+            setList(Array.isArray(pub) ? pub : []);
+
+            // mine: accept [ ... ] or { items: [...] } or { list: [...] } formats
+            const mineRaw = mineRes?.data;
+            const mineArr = Array.isArray(mineRaw)
+                ? mineRaw
+                : Array.isArray(mineRaw?.items)
+                    ? mineRaw.items
+                    : Array.isArray(mineRaw?.list)
+                        ? mineRaw.list
+                        : [];
+            setMine(mineArr);
         } catch (e) {
             console.error(e);
             setErr("목록 불러오기 실패");
@@ -199,7 +209,7 @@ export default function Home() {
 
             {/* 내 항목 */}
             <h3>내가 등록한 항목</h3>
-            {!mine.length ? (
+            {!Array.isArray(mine) || mine.length === 0 ? (
                 <div className="empty">아직 내가 등록한 항목이 없어요.</div>
             ) : (
                 <ul className="list">
