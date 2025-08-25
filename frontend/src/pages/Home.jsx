@@ -1,21 +1,13 @@
-// 홈: 전체 기능 페이지 (백엔드 /api/menus 에 맞춤)
-// 요구사항 반영:
-// - 메뉴 생성/조회/수정/삭제
-// - 투표(+1 / -1)
-// - 최신순 정렬(백엔드 votes 기준 + 프런트 인기순 옵션)
-// - 에러/로딩 처리
-// - 공개 목록 뷰
-// - 검색(q), 태그(tag)는 아직 백엔드 미구현 → 프런트에서만 필터링
-
+// Home.jsx
+// 백엔드 /api/menus 구조에 맞춘 전체 코드
 import { useEffect, useState } from "react";
 import api from "../api/axios";
 import TodoForm from "../components/TodoForm";
 import TodoList from "../components/TodoList";
 
 export default function Home() {
-    // 상태
-    const [list, setList] = useState([]);  // 공개 목록
-    const [name, setName] = useState(""); // 메뉴명 입력
+    const [list, setList] = useState([]);   // 공개 목록
+    const [name, setName] = useState("");   // 입력값
     const [loading, setLoading] = useState(false);
     const [busy, setBusy] = useState(false);
     const [err, setErr] = useState("");
@@ -29,7 +21,6 @@ export default function Home() {
             const res = await api.get(`/menus`);
             let pub = res.data || [];
 
-            // 정렬 옵션
             if (sort === "popular") {
                 pub = [...pub].sort((a, b) => (b.votes ?? 0) - (a.votes ?? 0));
             } else {
@@ -45,7 +36,6 @@ export default function Home() {
         }
     };
 
-    // 최초 + 정렬 변경 시
     useEffect(() => {
         fetchAll();
     }, [sort]);
@@ -133,10 +123,8 @@ export default function Home() {
 
             {/* 생성 */}
             <TodoForm
-                title={name}
-                setTitle={setName}
-                tag={""} // 태그는 아직 미사용
-                setTag={() => { }}
+                name={name}
+                setName={setName}
                 onCreate={onCreate}
                 busy={busy}
             />
@@ -158,10 +146,9 @@ export default function Home() {
             <h3>공개 목록</h3>
             <TodoList
                 items={list}
-                myItems={[]}      // mine 기능은 백엔드에 없음
                 loading={loading}
                 busy={busy}
-                onToggle={onVote} // 체크 → 투표 기능으로 매핑
+                onVote={onVote}
                 onUpdate={onUpdate}
                 onDelete={onDelete}
             />

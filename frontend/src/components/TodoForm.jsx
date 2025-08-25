@@ -1,30 +1,24 @@
-// 항목(선택지) 생성 폼: 제목(title), 태그(tag) 입력 + 추가 버튼
-export default function TodoForm({ title, setTitle, tag, setTag, onCreate, busy }) {
-    const submit = (e) => {
-        e.preventDefault();
-        onCreate();
-    };
-
+// TodoForm.jsx
+// 메뉴 추가 입력 폼
+export default function TodoForm({ name, setName, onCreate, busy }) {
     return (
-        <form className="form" onSubmit={submit}>
+        <form
+            className="form"
+            onSubmit={(e) => {
+                e.preventDefault();
+                onCreate();
+            }}
+        >
             <div className="row">
                 <input
                     placeholder="메뉴 입력 (예: 김치찌개)"
-                    value={title}
-                    onChange={(e) => setTitle(e.target.value)}
-                    aria-label="메뉴명"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    disabled={busy}
                 />
-                <button className="btn primary" type="submit" disabled={busy || !title.trim()}>
+                <button className="btn primary" type="submit" disabled={busy}>
                     추가
                 </button>
-            </div>
-            <div className="row">
-                <input
-                    placeholder="태그 (예: 한식/분식/중식/일식...)"
-                    value={tag}
-                    onChange={(e) => setTag(e.target.value)}
-                    aria-label="태그"
-                />
             </div>
         </form>
     );

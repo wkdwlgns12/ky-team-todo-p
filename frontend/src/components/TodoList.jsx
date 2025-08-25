@@ -1,39 +1,32 @@
-// 공개 목록 뷰
-// - 로딩 스켈레톤 / 빈 상태 / 항목 리스트 표시
-import TodoItem from "./TodoItem";
-
-export default function TodoList({
-    items, myItems, loading, busy, onToggle, onUpdate, onDelete,
-}) {
-    if (loading) {
-        return (
-            <ul className="list">
-                {Array.from({ length: 3 }).map((_, i) => (
-                    <li className="card skeleton" key={i}>
-                        <div className="sk-line" />
-                        <div className="sk-sub" />
-                    </li>
-                ))}
-            </ul>
-        );
-    }
-
-    if (!items?.length) {
-        return <div className="empty">현재 조건에 맞는 항목이 없어요. 첫 항목을 추가해보세요!</div>;
-    }
+// TodoList.jsx
+// 목록 출력 + 투표/수정/삭제 버튼
+export default function TodoList({ items, loading, busy, onVote, onUpdate, onDelete }) {
+    if (loading) return <p>로딩 중...</p>;
+    if (!items || items.length === 0) return <p>현재 등록된 메뉴가 없습니다.</p>;
 
     return (
         <ul className="list">
             {items.map((it) => (
-                <TodoItem
-                    key={it._id}
-                    item={it}
-                    isMine={!!myItems.find((m) => m._id === it._id)}
-                    busy={busy}
-                    onToggle={onToggle}
-                    onUpdate={onUpdate}
-                    onDelete={onDelete}
-                />
+                <li className="card" key={it._id}>
+                    <div className="row space-between align-center">
+                        <label style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                            <input
+                                type="checkbox"
+                                onChange={() => onVote(it._id, false)} // 단순 +1 버튼 역할
+                            />
+                            <h4 className="title">{it.name}</h4>
+                        </label>
+                        <span className="meta">투표수: {it.votes ?? 0}</span>
+                    </div>
+                    <div className="row gap sm mt8">
+                        <button className="btn primary" onClick={() => onUpdate(it._id)} disabled={busy}>
+                            수정
+                        </button>
+                        <button className="btn danger" onClick={() => onDelete(it._id)} disabled={busy}>
+                            삭제
+                        </button>
+                    </div>
+                </li>
             ))}
         </ul>
     );
