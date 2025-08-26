@@ -8,7 +8,7 @@ export default function App() {
       <nav className="nav-bar">
         <div className="nav-inner">
           <Link to="/">홈</Link>
-          <Link to="/about">About</Link>
+          <Link to="/about">검색</Link>
         </div>
       </nav>
       <Routes>
