@@ -19,5 +19,5 @@ mongoose
 app.use("/api/menus", menuRoutes);
 
 app.listen(PORT, () => {
-    console.log("server is running");
+    console.log("server is runnaing");
 });
