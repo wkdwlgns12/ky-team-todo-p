@@ -1,22 +1,18 @@
-// TodoForm.jsx
-// 메뉴 추가 입력 폼
-export default function TodoForm({ name, setName, onCreate, busy }) {
+export default function TodoForm({ title, setTitle, onCreate, busy }) {
+    const submit = (e) => {
+        e.preventDefault();
+        onCreate();
+    };
+
     return (
-        <form
-            className="form"
-            onSubmit={(e) => {
-                e.preventDefault();
-                onCreate();
-            }}
-        >
+        <form className="form" onSubmit={submit}>
             <div className="row">
                 <input
                     placeholder="메뉴 입력 (예: 김치찌개)"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    disabled={busy}
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                 />
-                <button className="btn primary" type="submit" disabled={busy}>
+                <button className="btn primary" type="submit" disabled={busy || !title.trim()}>
                     추가
                 </button>
             </div>
