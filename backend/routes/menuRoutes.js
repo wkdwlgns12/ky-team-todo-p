@@ -15,7 +15,7 @@ router.get("/:id", async (req, res) => {
         const menu = await Menu.findById(req.params.id);
         if (!menu) return res.status(404).json({ message: "해당 메뉴를 찾을 수 없습니다." });
 
-        res.status(201).json({message:'1개의 메뉴가 조회 되었습니다.', menu})
+        res.status(201).json({ message: '1개의 메뉴가 조회 되었습니다.', menu })
     } catch (err) {
         res.status(400).json({ message: "서버 오류", error });
     }
@@ -28,10 +28,10 @@ router.post("/", async (req, res) => {
         if (payload.length === 0) return res.status(400).json({ error: "메뉴가 없습니다(등록해 주세요)." });
         if (payload.some(m => !m.name || !m.name.trim()))
             return res.status(400).json({ error: "메뉴 이름은 필수입니다." });
-        
+
         const menu = await Menu.insertMany(payload.map(m => ({ name: m.name.trim() })), { ordered: false });
 
-        res.status(201).json({message:'메뉴가 등록 되었습니다.', menu})
+        res.status(201).json({ message: '메뉴가 등록 되었습니다.', menu })
     } catch (err) {
         res.status(400).json({ error: err.message });
     }
@@ -61,8 +61,8 @@ router.post("/:id/unvote", async (req, res) => {
             { new: true }
         );
         if (!updated) return res.status(404).json({ error: "메뉴를 찾을 수 없습니다" });
-        
-        if(updated.votes < 0){
+
+        if (updated.votes < 0) {
             updated.votes = 0;
             await updated.save();
         }
@@ -88,21 +88,22 @@ router.put("/:id", async (req, res) => {
 
         if (!updated) return res.status(404).json({ error: "메뉴를 찾을 수 없습니다" })
 
-        res.status(201).json({message:'1개의 메뉴가 수정 되었습니다.', updated})
+        res.status(201).json({ message: '1개의 메뉴가 수정 되었습니다.', updated })
     } catch (err) {
-        res.status(400).json({message:"서버 오류",error});
-}});
+        res.status(400).json({ message: "서버 오류", error });
+    }
+});
 
 //메뉴 삭제
 router.delete("/:id", async (req, res) => {
     try {
-        const deleted=await Menu.findByIdAndDelete(req.params.id)
-        
-        if(!deleted) return res.status(404).json({message: "메뉴를 찾을 수 없습니다."})
-            res.status(201).json({message:"메뉴가 삭제 되었습니다",deleted})
-        } catch (error) {
-            res.status(400).json({message:"서버 오류",error})
-        }
+        const deleted = await Menu.findByIdAndDelete(req.params.id)
+
+        if (!deleted) return res.status(404).json({ message: "메뉴를 찾을 수 없습니다." })
+        res.status(201).json({ message: "메뉴가 삭제 되었습니다", deleted })
+    } catch (error) {
+        res.status(400).json({ message: "서버 오류", error })
+    }
 });
 
 module.exports = router;
